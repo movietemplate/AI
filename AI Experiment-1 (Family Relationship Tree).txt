@@ -1,0 +1,56 @@
+Code:
+from collections import defaultdict
+class Solution:
+   def __init__(self, head_name):
+      self.family = defaultdict(list)
+      self.head = head_name
+      self.dead = set()
+
+   def birth(self, p_name, c_name):
+      self.family[p_name].append(c_name)
+
+   def death(self, name):
+      self.dead.add(name)
+
+   def inheritance(self):
+      self.ans = []
+      self.depth_search(self.head)
+      return self.ans
+
+   def depth_search(self, current):
+      if current not in self.dead:
+         self.ans.append(current)
+      for child in self.family[current]:
+         self.depth_search(child)
+head=input('Enter the head of the family : ')
+ob=Solution(head)
+print('Enter the children of',head,':')
+c1, c2=input().split()
+ob.birth(head, c1)
+ob.birth(head, c2)
+print('Enter the children of',c2,':')
+c3, c4, c5=input().split()
+ob.birth(c2,c3)
+ob.birth(c2,c4)
+ob.birth(c2,c5)
+print('Enter the name of person who died : ')
+d1=input()
+ob.death(d1)
+print('Order of inheritance : ',ob.inheritance())
+print('Enter the name of person who died : ')
+d2=input()
+ob.death(d2)
+print('Order of inheritance : ',ob.inheritance())
+
+Output :
+Enter the head of the family : Paul
+Enter the children of Paul :
+Zach Jesse
+Enter the children of Jesse :
+Ursula Ryan Thea
+Enter the name of person who died : 
+Paul
+Order of inheritance :  ['Zach', 'Jesse', 'Ursula', 'Ryan', 'Thea']
+Enter the name of person who died : 
+Zach
+Order of inheritance :  ['Jesse', 'Ursula', 'Ryan', 'Thea']
